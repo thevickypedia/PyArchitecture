@@ -96,7 +96,7 @@ def commandline() -> None:
     if cpu_info and not save_info:
         pprint(cpu.get_cpu_info())
     if gpu_info and not save_info:
-        pprint(gpu.get_gpu_names())
+        pprint(gpu.get_gpu_info())
     if mem_info and not save_info:
         pprint(memory.get_memory_info())
     if all_info and not save_info:
@@ -114,7 +114,7 @@ def commandline() -> None:
             if cpu_info:
                 data["CPU"] = cpu.get_cpu_info()
             if gpu_info:
-                data["GPU"] = gpu.get_gpu_names()
+                data["GPU"] = gpu.get_gpu_info()
             if disk_info:
                 data["Disks"] = disks.get_all_disks()
             if mem_info:

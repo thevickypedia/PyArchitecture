@@ -22,9 +22,9 @@ def reformat_windows(data: Dict[str, str | int | float]) -> Dict[str, str]:
         Returns a dictionary of key-value pairs.
     """
     data["ID"] = data["DeviceID"][-1]
-    data["Name"] = data["Model"]
-    data["DeviceID"] = data["DeviceID"].replace("\\", "").replace(".", "")
-    data["Size"] = squire.size_converter(data["Size"])
+    data["name"] = data["Model"]
+    data["device_id"] = data["DeviceID"].replace("\\", "").replace(".", "")
+    data["size"] = squire.size_converter(data["Size"])
     del data["Caption"]
     del data["Model"]
     return data

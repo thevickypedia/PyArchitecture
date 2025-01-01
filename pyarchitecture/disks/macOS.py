@@ -95,17 +95,17 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
         if disk.get("Virtual") == "No":
             physical_disks.append(
                 {
-                    "Name": disk.get("Device / Media Name"),
-                    "Size": squire.size_converter(
+                    "name": disk.get("Device / Media Name"),
+                    "size": squire.size_converter(
                         parse_size(disk.get("Disk Size", ""))
                     ),
-                    "DeviceID": disk.get("Device Identifier"),
-                    "Node": disk.get("Device Node"),
+                    "device_id": disk.get("Device Identifier"),
+                    "node": disk.get("Device Node"),
                 }
             )
             # Instantiate default dict with keys as DeviceIDs and values as empty list
             _ = device_ids[disk["Device Identifier"]]
     mountpoints = update_mountpoints(disks, device_ids)
     for disk in physical_disks:
-        disk["Mountpoints"] = ", ".join(mountpoints[disk["DeviceID"]])
+        disk["mountpoints"] = ", ".join(mountpoints[disk["device_id"]])
     return physical_disks

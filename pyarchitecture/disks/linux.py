@@ -22,23 +22,23 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
     for device in data.get("blockdevices", []):
         if device["type"] == "disk":
             disk_info = {
-                "DeviceID": device["name"],
-                "Size": device["size"],
-                "Name": device.get("model", "Unknown"),
-                "Mountpoints": [],
+                "device_id": device["name"],
+                "size": device["size"],
+                "name": device.get("model", "Unknown"),
+                "mountpoints": [],
             }
             # Collect mount points from partitions
             if "children" in device:
                 for partition in device["children"]:
                     if partition.get("mountpoint"):
-                        disk_info["Mountpoints"].append(partition["mountpoint"])
-            if not disk_info["Mountpoints"] and device.get("mountpoint"):
+                        disk_info["mountpoints"].append(partition["mountpoint"])
+            if not disk_info["mountpoints"] and device.get("mountpoint"):
                 if isinstance(device["mountpoint"], list):
-                    disk_info["Mountpoints"] = device["mountpoint"]
+                    disk_info["mountpoints"] = device["mountpoint"]
                 else:
-                    disk_info["Mountpoints"] = [device["mountpoint"]]
-            elif not disk_info["Mountpoints"]:
-                disk_info["Mountpoints"] = ["Not Mounted"]
-            disk_info["Mountpoints"] = ", ".join(disk_info["Mountpoints"])
+                    disk_info["mountpoints"] = [device["mountpoint"]]
+            elif not disk_info["mountpoints"]:
+                disk_info["mountpoints"] = ["Not Mounted"]
+            disk_info["mountpoints"] = ", ".join(disk_info["Mountpoints"])
             disks.append(disk_info)
     return disks

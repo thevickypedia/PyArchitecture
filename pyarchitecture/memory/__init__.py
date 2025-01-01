@@ -2,7 +2,7 @@ import logging
 import os
 from typing import Dict
 
-from pyarchitecture import models
+from pyarchitecture import models, squire
 from pyarchitecture.memory import linux, macOS, windows
 
 LOGGER = logging.getLogger(__name__)
@@ -26,11 +26,14 @@ def _get_mem_lib(user_input: str | os.PathLike) -> str:
     return mem_lib
 
 
-def get_memory_info(mem_lib: str | os.PathLike = None) -> Dict[str, int]:
+def get_memory_info(
+    mem_lib: str | os.PathLike = None, humanize: bool = True
+) -> Dict[str, int | str]:
     """OS-agnostic function to get memory information.
 
     Args:
         mem_lib: Custom memory library path.
+        humanize: Flag to return humanized memory info.
 
     Returns:
         Dict[str, int]:
@@ -42,6 +45,9 @@ def get_memory_info(mem_lib: str | os.PathLike = None) -> Dict[str, int]:
         models.OperatingSystem.windows: windows.get_memory_info,
     }
     try:
-        return os_map[models.OPERATING_SYSTEM](mem_lib)
+        raw_info = os_map[models.OPERATING_SYSTEM](_get_mem_lib(mem_lib))
+        if humanize:
+            return {k: squire.size_converter(v) for k, v in raw_info.items()}
+        return raw_info
     except Exception as error:
         LOGGER.error(error)

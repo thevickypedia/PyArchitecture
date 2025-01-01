@@ -2,7 +2,7 @@ import logging
 import os
 import subprocess
 
-from pyarchitecture import models
+from pyarchitecture.cpu import models
 
 LOGGER = logging.getLogger(__name__)
 

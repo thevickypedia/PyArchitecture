@@ -25,7 +25,7 @@ class MEMORYSTATUSEX(ctypes.Structure):
     ]
 
 
-def get_memory_info(*args) -> Dict[str, int]:
+def get_memory_info(_: str) -> Dict[str, int]:
     """Get memory information for Windows OS.
 
     Returns:
