@@ -1,5 +1,5 @@
 # PyArchitecture
-PyArchitecture is an ultra lightweight python module to get system architecture information.
+PyArchitecture is a lightweight python module to get system architecture information.
 
 ![Python][label-pyversion]
 
@@ -26,47 +26,20 @@ import pyarchitecture
 if __name__ == '__main__':
     all_disks = pyarchitecture.disks.get_all_disks()
     print(all_disks)
+    cpu_info = pyarchitecture.cpu.get_cpu_info()
+    print(cpu_info)
+    gpu_info = pyarchitecture.gpu.get_gpu_info()
+    print(gpu_info)
+    mem_info = pyarchitecture.memory.get_memory_info()
+    print(mem_info)
 ```
 
 **Initiate - CLI**
 ```shell
-pyarchitecture disk
+pyarchitecture all
 ```
 
 > Use `pyarchitecture --help` for usage instructions.
-
-### Source Commands
-
-**Linux**
-
-```shell
-/usr/bin/lsblk -o NAME,SIZE,TYPE,MODEL,MOUNTPOINT -J
-```
-
-**macOS**
-
-```shell
-/usr/sbin/diskutil info -all
-```
-
-**Windows**
-
-```shell
-C:\\Program Files\\PowerShell\\7\\pwsh.exe -Command
-Get-PhysicalDisk | ForEach-Object {
-    $disk = $_
-    $partitions = Get-Partition -DiskNumber $disk.DeviceID
-    $partitions | ForEach-Object {
-        [PSCustomObject]@{
-            DiskNumber = $disk.DeviceID
-            Partition = $_.PartitionNumber
-            DriveLetter = (Get-Volume -Partition $_).DriveLetter
-            MountPoint = (Get-Volume -Partition $_).DriveLetter
-        }
-    }
-}
-```
-
 
 ## Linting
 `pre-commit` will ensure linting

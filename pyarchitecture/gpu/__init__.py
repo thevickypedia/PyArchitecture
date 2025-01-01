@@ -24,7 +24,7 @@ def _get_gpu_lib(user_input: str | os.PathLike) -> str:
     return gpu_lib
 
 
-def get_gpu_names(gpu_lib: str | os.PathLike = None) -> List[Dict[str, str]]:
+def get_gpu_info(gpu_lib: str | os.PathLike = None) -> List[Dict[str, str]]:
     """OS-agnostic function to get all GPUs connected to the host system.
 
     Args:

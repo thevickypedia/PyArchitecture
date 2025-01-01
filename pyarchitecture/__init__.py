@@ -1,12 +1,11 @@
 import json
-import pprint
 import sys
 import time
-from typing import Any, Dict
+from typing import Any, Dict, NoReturn
 
 from pyarchitecture import cpu, disks, gpu, memory
 
-version = "0.0.0-a0"
+version = "0.0.1"
 
 
 def all_components() -> Dict[str, Any]:
@@ -19,9 +18,15 @@ def all_components() -> Dict[str, Any]:
     return {
         "Disks": disks.get_all_disks(),
         "CPU": cpu.get_cpu_info(),
-        "GPU": gpu.get_gpu_names(),
+        "GPU": gpu.get_gpu_info(),
         "Memory": memory.get_memory_info(),
     }
+
+
+def pprint(data: Any) -> NoReturn:
+    """Pretty print the data and exit with return code 0."""
+    print(json.dumps(data, indent=2))
+    sys.exit(0)
 
 
 def commandline() -> None:
@@ -87,19 +92,17 @@ def commandline() -> None:
         sys.exit(0)
 
     if disk_info and not save_info:
-        pprint.pprint(disks.get_all_disks())
-        sys.exit(0)
+        pprint(disks.get_all_disks())
     if cpu_info and not save_info:
-        pprint.pprint(cpu.get_cpu_info())
-        sys.exit(0)
+        pprint(cpu.get_cpu_info())
     if gpu_info and not save_info:
-        pprint.pprint(gpu.get_gpu_names())
-        sys.exit(0)
+        pprint(gpu.get_gpu_names())
     if mem_info and not save_info:
-        pprint.pprint(memory.get_memory_info())
-        sys.exit(0)
+        pprint(memory.get_memory_info())
+    if all_info and not save_info:
+        pprint(all_components())
 
-    if not any([disk_info, cpu_info, gpu_info]):
+    if not any([disk_info, cpu_info, gpu_info, all_info]):
         save_info = False
 
     if save_info:

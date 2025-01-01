@@ -20,7 +20,10 @@ dependencies = [
 
 [tool.setuptools]
 packages = [
-    "pyarchitecture"
+    "pyarchitecture",
+    "pyarchitecture.cpu",
+    "pyarchitecture.disks",
+    "pyarchitecture.gpu",
 ]
 
 [tool.setuptools.dynamic]
