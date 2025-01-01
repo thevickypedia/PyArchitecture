@@ -42,7 +42,7 @@ def get_memory_info(
         models.OperatingSystem.windows: windows.get_memory_info,
     }
     library_path = _get_mem_lib(mem_lib)
-    if os.path.isfile(library_path) :
+    if os.path.isfile(library_path):
         raw_info = os_map[models.OPERATING_SYSTEM](library_path)
         if humanize:
             return {k: squire.size_converter(v) for k, v in raw_info.items()}

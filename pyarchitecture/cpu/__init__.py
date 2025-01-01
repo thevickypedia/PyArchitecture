@@ -39,6 +39,6 @@ def get_cpu_info(cpu_lib: str | os.PathLike = None) -> Dict[str, int | str]:
         return {
             "name": cpu_name,
             "logical_cores": cpu_count,
-            "physical_cores": cpu_count / 2 if cpu_count >= 2 else 1,
+            "physical_cores": int(cpu_count / 2) if cpu_count >= 2 else 1,
         }
     LOGGER.error(f"CPU library {library_path!r} doesn't exist")
