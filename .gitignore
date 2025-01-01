@@ -1,2 +1,5 @@
 .idea
 venv
+build
+temp.py
+PhyDisk.egg-info

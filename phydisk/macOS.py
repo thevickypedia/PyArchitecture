@@ -5,7 +5,7 @@ import subprocess
 from collections import defaultdict
 from typing import Dict, List
 
-from pydisk import squire
+from phydisk import squire
 
 LOGGER = logging.getLogger(__name__)
 
