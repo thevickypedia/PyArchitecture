@@ -2,5 +2,5 @@
 venv
 build
 temp.py
-PhyDisk.egg-info
+PyArchitecture.egg-info
 *.json

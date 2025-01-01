@@ -1,5 +1,5 @@
-# PhyDisk (Physical Disk)
-PhyDisk is an ultra lightweight python module to get all physical disks connected to a host machine.
+# PyArchitecture
+PyArchitecture is an ultra lightweight python module to get system architecture information.
 
 ![Python][label-pyversion]
 
@@ -14,26 +14,26 @@ PhyDisk is an ultra lightweight python module to get all physical disks connecte
 ## Installation
 
 ```shell
-pip install PhyDisk
+pip install PyArchitecture
 ```
 
 ## Usage
 
 **Initiate - IDE**
 ```python
-import phydisk
+import pyarchitecture
 
 if __name__ == '__main__':
-    all_disks = phydisk.get_all_disks()
+    all_disks = pyarchitecture.disks.get_all_disks()
     print(all_disks)
 ```
 
 **Initiate - CLI**
 ```shell
-phydisk print
+pyarchitecture disk
 ```
 
-> Use `phydisk --help` for usage instructions.
+> Use `pyarchitecture --help` for usage instructions.
 
 ### Source Commands
 
@@ -84,7 +84,7 @@ pre-commit run --all-files
 ## Pypi Package
 [![pypi-module][label-pypi-package]][pypi-repo]
 
-[https://pypi.org/project/PhyDisk/][pypi]
+[https://pypi.org/project/PyArchitecture/][pypi]
 
 ## License & copyright
 
@@ -92,15 +92,15 @@ pre-commit run --all-files
 
 Licensed under the [MIT License][license]
 
-[license]: https://github.com/thevickypedia/PhyDisk/blob/master/LICENSE
-[label-pypi-package]: https://img.shields.io/badge/Pypi%20Package-PhyDisk-blue?style=for-the-badge&logo=Python
+[license]: https://github.com/thevickypedia/PyArchitecture/blob/master/LICENSE
+[label-pypi-package]: https://img.shields.io/badge/Pypi%20Package-PyArchitecture-blue?style=for-the-badge&logo=Python
 [label-pyversion]: https://img.shields.io/badge/python-3.10%20%7C%203.11-blue
 [label-platform]: https://img.shields.io/badge/Platform-Linux|macOS|Windows-1f425f.svg
-[label-actions-pypi]: https://github.com/thevickypedia/PhyDisk/actions/workflows/python-publish.yaml/badge.svg
-[label-pypi]: https://img.shields.io/pypi/v/PhyDisk
-[label-pypi-format]: https://img.shields.io/pypi/format/PhyDisk
-[label-pypi-status]: https://img.shields.io/pypi/status/PhyDisk
-[gha_pypi]: https://github.com/thevickypedia/PhyDisk/actions/workflows/python-publish.yaml
-[pypi]: https://pypi.org/project/PhyDisk
-[pypi-files]: https://pypi.org/project/PhyDisk/#files
+[label-actions-pypi]: https://github.com/thevickypedia/PyArchitecture/actions/workflows/python-publish.yaml/badge.svg
+[label-pypi]: https://img.shields.io/pypi/v/PyArchitecture
+[label-pypi-format]: https://img.shields.io/pypi/format/PyArchitecture
+[label-pypi-status]: https://img.shields.io/pypi/status/PyArchitecture
+[gha_pypi]: https://github.com/thevickypedia/PyArchitecture/actions/workflows/python-publish.yaml
+[pypi]: https://pypi.org/project/PyArchitecture
+[pypi-files]: https://pypi.org/project/PyArchitecture/#files
 [pypi-repo]: https://packaging.python.org/tutorials/packaging-projects/

@@ -1,5 +1,5 @@
 [project]
-name = "PhyDisk"
+name = "PyArchitecture"
 dynamic = ["version"]
 description = "Python module to get physical drives connected to a host machine"
 readme = "README.md"
@@ -12,33 +12,28 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: System :: Hardware",
 ]
-keywords = ["physical-drives", "PhyDisk"]
+keywords = ["physical-drives", "PyArchitecture"]
 requires-python = ">=3.10"
 
 [tool.setuptools]
 packages = [
-    "phydisk"
+    "pyarchitecture"
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "phydisk.version"}
+version = {attr = "pyarchitecture.version"}
 
 [project.optional-dependencies]
 dev = ["pre-commit"]
-standard = [
-    "Jinja2==3.1.*",
-    "requests==2.*",
-    "gmail-connector"
-]
 
 [project.scripts]
 # sends all the args to commandline function, where the arbitary commands as processed accordingly
-phydisk = "phydisk:commandline"
+pyarchitecture = "pyarchitecture:commandline"
 
 [build-system]
 requires      = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.urls]
-Homepage = "https://github.com/thevickypedia/PhyDisk"
-Source = "https://github.com/thevickypedia/PhyDisk"
+Homepage = "https://github.com/thevickypedia/PyArchitecture"
+Source = "https://github.com/thevickypedia/PyArchitecture"
