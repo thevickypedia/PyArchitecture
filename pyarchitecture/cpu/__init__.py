@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Dict
 
 from pyarchitecture import models
 from pyarchitecture.cpu import main
@@ -23,7 +24,7 @@ def _get_cpu_lib(user_input: str | os.PathLike) -> str:
     return cpu_lib
 
 
-def get_cpu_name(cpu_lib: str | os.PathLike = None) -> str:
+def get_cpu_info(cpu_lib: str | os.PathLike = None) -> Dict[str, int | str]:
     """OS-agnostic function to get all CPUs connected to the host system.
 
     Args:
@@ -33,4 +34,10 @@ def get_cpu_name(cpu_lib: str | os.PathLike = None) -> str:
         List[Dict[str, str]]:
         Returns CPU name.
     """
-    return main.get_name(_get_cpu_lib(cpu_lib))
+    cpu_name = main.get_name(_get_cpu_lib(cpu_lib))
+    cpu_count = os.cpu_count()
+    return {
+        "name": cpu_name,
+        "logical_cores": cpu_count,
+        "physical_cores": int(cpu_count / 2) if cpu_count >= 2 else 1,
+    }

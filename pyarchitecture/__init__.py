@@ -1,10 +1,26 @@
 import json
+import pprint
 import sys
 import time
+from typing import Any, Dict
 
 from pyarchitecture import cpu, disks, gpu
 
 version = "0.0.0-a0"
+
+
+def all_components() -> Dict[str, Any]:
+    """Get all the architectural components of the system.
+
+    Returns:
+        Dict[str, Any]:
+        Returns a dictionary of all the components' information.
+    """
+    return {
+        "Disks": disks.get_all_disks(),
+        "CPU": cpu.get_cpu_info(),
+        "GPU": gpu.get_gpu_names(),
+    }
 
 
 def commandline() -> None:
@@ -67,34 +83,34 @@ def commandline() -> None:
         sys.exit(0)
 
     if disk_info and not save_info:
-        for disk in disks.get_all_disks():
-            print(disk)
+        pprint.pprint(disks.get_all_disks())
         sys.exit(0)
     if cpu_info and not save_info:
-        print(cpu.get_cpu_name())
+        pprint.pprint(cpu.get_cpu_info())
         sys.exit(0)
     if gpu_info and not save_info:
-        print(gpu.get_gpu_names())
+        pprint.pprint(gpu.get_gpu_names())
         sys.exit(0)
+
+    if not any([disk_info, cpu_info, gpu_info]):
+        save_info = False
 
     if save_info:
         filename = filename or f"PyArchitecture_{int(time.time())}.json"
         if all_info:
-            data = {
-                "Disks": disks.get_all_disks(),
-                "CPU": cpu.get_cpu_name(),
-                "GPU": gpu.get_gpu_names(),
-            }
+            data = all_components()
         else:
             data = {}
             if cpu_info:
-                data["CPU"] = cpu.get_cpu_name()
+                data["CPU"] = cpu.get_cpu_info()
             if gpu_info:
                 data["GPU"] = gpu.get_gpu_names()
             if disk_info:
                 data["Disks"] = disks.get_all_disks()
-        with open(filename, "w") as file:
-            json.dump(data, file, indent=2)
+        import io
+
+        with open(filename, "w") as json_file:
+            json.dump(data, json_file, indent=2)  # type: io.TextIOBase
         print(f"Architecture information has been stored in {filename!r}")
         sys.exit(0)
     else:
