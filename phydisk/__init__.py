@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import sys
@@ -41,16 +42,21 @@ def commandline() -> None:
     **Flags**
         - ``--version | -V``: Prints the version.
         - ``--help | -H``: Prints the help section.
+        - ``print``: Prints the disk information in terminal.
+        - ``save``: Saves the disk information into a JSON file.
     """
     assert sys.argv[0].lower().endswith("phydisk"), "Invalid commandline trigger!!"
 
     print_ver = "--version" in sys.argv or "-V" in sys.argv
     get_help = "--help" in sys.argv or "-H" in sys.argv
+    print_info = "print" in sys.argv
+    save_info = "save" in sys.argv
 
     options = {
         "--version | -V": "Prints the version.",
         "--help | -H": "Prints the help section.",
-        "phydisk": "Prints all the physical drives and their information",
+        "print": "Prints the disk information in the terminal.",
+        "save": "Saves the disk information into a JSON file.",
     }
     # weird way to increase spacing to keep all values monotonic
     _longest_key = len(max(options.keys()))
@@ -59,14 +65,26 @@ def commandline() -> None:
         f"{k} {'·' * (_longest_key - len(k) + 8)}→ {v}".expandtabs()
         for k, v in options.items()
     )
+
     if print_ver:
         print(f"PhyDisk {version}")
         sys.exit(0)
+
+    if print_info:
+        for disk in get_all_disks():
+            print(disk)
+        sys.exit(0)
+    elif save_info:
+        filename = "disk_info.json"
+        with open(filename, "w") as file:
+            json.dump(get_all_disks(), file, indent=2)
+        print(f"Physical disks' information has been stored in {filename!r}")
+        sys.exit(0)
+    else:
+        get_help = True
+
     if get_help:
         print(
             f"\nUsage: phydisk [arbitrary-command]\n\nOptions (and corresponding behavior):{choices}"
         )
         sys.exit(0)
-
-    for disk in get_all_disks():
-        print(disk)
