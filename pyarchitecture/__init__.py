@@ -45,6 +45,7 @@ def commandline() -> None:
     disk_info = "disk" in sys.argv
     cpu_info = "cpu" in sys.argv
     gpu_info = "gpu" in sys.argv
+    mem_info = "memory" in sys.argv
     all_info = "all" in sys.argv
     save_info = "save" in sys.argv
 
@@ -65,9 +66,11 @@ def commandline() -> None:
     options = {
         "--version | -V": "Prints the version.",
         "--help | -H": "Prints the help section.",
+        "all": "Prints the entire system information in the terminal.",
         "disk": "Prints the disk information in the terminal.",
         "cpu": "Prints the CPU name in the terminal.",
         "gpu": "Prints the GPU information in the terminal.",
+        "memory": "Prints the RAM/memory information in the terminal.",
         "save": "Saves the chosen information into a JSON file.",
         "--filename": "Filename to store the information.",
     }
@@ -92,6 +95,9 @@ def commandline() -> None:
     if gpu_info and not save_info:
         pprint.pprint(gpu.get_gpu_names())
         sys.exit(0)
+    if mem_info and not save_info:
+        pprint.pprint(memory.get_memory_info())
+        sys.exit(0)
 
     if not any([disk_info, cpu_info, gpu_info]):
         save_info = False
@@ -108,6 +114,8 @@ def commandline() -> None:
                 data["GPU"] = gpu.get_gpu_names()
             if disk_info:
                 data["Disks"] = disks.get_all_disks()
+            if mem_info:
+                data["Memory"] = memory.get_memory_info()
 
         with open(filename, "w") as json_file:
             json.dump(data, json_file, indent=2)
