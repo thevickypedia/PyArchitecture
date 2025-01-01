@@ -14,16 +14,13 @@ def _get_mem_lib(user_input: str | os.PathLike) -> str:
     Args:
         user_input: Memory library input by user.
     """
-    mem_lib = (
+    return (
         user_input
         or os.environ.get("mem_lib")
         or os.environ.get("MEM_LIB")
         or models.default_mem_lib()[models.OPERATING_SYSTEM]
+        or __file__  # placeholder for windows
     )
-    assert os.path.isfile(mem_lib), (
-        f"Memory library {mem_lib!r} doesn't exist" if mem_lib else None
-    )
-    return mem_lib
 
 
 def get_memory_info(
@@ -44,10 +41,11 @@ def get_memory_info(
         models.OperatingSystem.linux: linux.get_memory_info,
         models.OperatingSystem.windows: windows.get_memory_info,
     }
-    try:
-        raw_info = os_map[models.OPERATING_SYSTEM](_get_mem_lib(mem_lib))
+    library_path = _get_mem_lib(mem_lib)
+    if os.path.isfile(library_path) :
+        raw_info = os_map[models.OPERATING_SYSTEM](library_path)
         if humanize:
             return {k: squire.size_converter(v) for k, v in raw_info.items()}
         return raw_info
-    except Exception as error:
-        LOGGER.error(error)
+    else:
+        LOGGER.error(f"Memory library {mem_lib!r} doesn't exist")
