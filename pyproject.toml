@@ -19,8 +19,9 @@ requires-python = ">=3.10"
 packages = [
     "pyarchitecture",
     "pyarchitecture.cpu",
-    "pyarchitecture.disks",
     "pyarchitecture.gpu",
+    "pyarchitecture.disks",
+    "pyarchitecture.memory",
 ]
 
 [tool.setuptools.dynamic]
