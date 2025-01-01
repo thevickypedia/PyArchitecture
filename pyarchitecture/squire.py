@@ -31,3 +31,48 @@ def size_converter(byte_size: int | float) -> str:
             f"{format_nos(round(byte_size / pow(1024, index), 2))} {size_name[index]}"
         )
     return "0 B"
+
+
+def convert_to_bytes(size_str: str) -> int:
+    """Convert a size string to bytes.
+
+    Args:
+        size_str (str): Size string to convert to bytes.
+
+    Returns:
+        int:
+        Size in bytes.
+    """
+    # Dictionary to map size units to their respective byte multipliers
+    units = {
+        "B": 1,  # Bytes
+        "K": 1024,  # Kilobytes
+        "M": 1024 * 1024,  # Megabytes
+        "G": 1024 * 1024 * 1024,  # Gigabytes
+        "T": 1024 * 1024 * 1024 * 1024,  # Terabytes
+        "P": 1024 * 1024 * 1024 * 1024 * 1024,  # Petabytes
+        "E": 1024 * 1024 * 1024 * 1024 * 1024 * 1024,  # Exabytes
+    }
+
+    # Strip extra spaces and make the string uppercase
+    size_str = size_str.strip().upper()
+
+    # Find the last character, which should indicate the unit (B, K, M, G, T, P, E)
+    if size_str[-1] in units:
+        # Extract the numeric value and unit
+        numeric_part = size_str[
+            :-1
+        ].strip()  # everything except the last character (unit)
+        unit_part = size_str[-1]  # the last character (unit)
+
+        # Ensure the numeric part is a valid number
+        try:
+            numeric_value = float(numeric_part)
+        except ValueError:
+            raise ValueError("Invalid numeric value.")
+
+        # Convert the size to bytes using the multiplier from the dictionary
+        return int(numeric_value * units[unit_part])
+
+    else:
+        raise ValueError("Invalid size unit. Supported units are B, K, M, G, T, P, E.")

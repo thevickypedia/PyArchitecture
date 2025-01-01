@@ -1,9 +1,9 @@
 import logging
 import os
-from typing import Dict, List
+from typing import Dict
 
 from pyarchitecture import models
-from pyarchitecture.memory import main
+from pyarchitecture.memory import linux, macOS, windows
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +20,9 @@ def _get_mem_lib(user_input: str | os.PathLike) -> str:
         or os.environ.get("MEM_LIB")
         or models.default_mem_lib()[models.OPERATING_SYSTEM]
     )
-    assert os.path.isfile(mem_lib), f"Memory library {mem_lib!r} doesn't exist" if mem_lib else None
+    assert os.path.isfile(mem_lib), (
+        f"Memory library {mem_lib!r} doesn't exist" if mem_lib else None
+    )
     return mem_lib
 
 
@@ -31,7 +33,15 @@ def get_memory_info(mem_lib: str | os.PathLike = None) -> Dict[str, int]:
         mem_lib: Custom memory library path.
 
     Returns:
-        List[Dict[str, str]]:
-        Returns the memory model and vendor information as a list of key-value pairs.
+        Dict[str, int]:
+        Returns the memory information as key-value pairs.
     """
-    return main.get_mem_info(_get_mem_lib(mem_lib))
+    os_map = {
+        models.OperatingSystem.darwin: macOS.get_memory_info,
+        models.OperatingSystem.linux: linux.get_memory_info,
+        models.OperatingSystem.windows: windows.get_memory_info,
+    }
+    try:
+        return os_map[models.OPERATING_SYSTEM](mem_lib)
+    except Exception as error:
+        LOGGER.error(error)
