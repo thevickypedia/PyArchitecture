@@ -35,4 +35,4 @@ def get_gpu_info(gpu_lib: str | os.PathLike = None) -> List[Dict[str, str]]:
     library_path = _get_gpu_lib(gpu_lib)
     if os.path.isfile(library_path):
         return main.get_names(library_path)
-    LOGGER.error(f"GPU library {gpu_lib!r} doesn't exist")
+    LOGGER.error(f"GPU library {library_path!r} doesn't exist")

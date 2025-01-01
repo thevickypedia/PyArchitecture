@@ -48,4 +48,4 @@ def get_memory_info(
             return {k: squire.size_converter(v) for k, v in raw_info.items()}
         return raw_info
     else:
-        LOGGER.error(f"Memory library {mem_lib!r} doesn't exist")
+        LOGGER.error(f"Memory library {library_path!r} doesn't exist")
