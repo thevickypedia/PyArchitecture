@@ -87,9 +87,7 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
         List[Dict[str, str]]:
         Returns disks information for macOS devices.
     """
-    result = subprocess.run(
-        [disk_lib, "info", "-all"], capture_output=True, text=True
-    )
+    result = subprocess.run([disk_lib, "info", "-all"], capture_output=True, text=True)
     disks = parse_diskutil_output(result.stdout)
     device_ids = defaultdict(list)
     physical_disks = []

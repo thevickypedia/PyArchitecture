@@ -62,7 +62,9 @@ def clean_ansi_escape_sequences(text: str) -> str:
     return ansi_escape.sub("", text)
 
 
-def get_physical_disks_and_partitions(disk_lib: str | os.PathLike) -> List[Tuple[str, str, str]]:
+def get_physical_disks_and_partitions(
+    disk_lib: str | os.PathLike,
+) -> List[Tuple[str, str, str]]:
     """Powershell Core command to get physical disks and their partitions with drive letters (mount points).
 
     Returns:

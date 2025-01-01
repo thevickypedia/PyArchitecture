@@ -5,9 +5,9 @@ try:
 except ImportError:
     from enum import Enum
 
-
     class StrEnum(str, Enum):
-        """Custom StrEnum object for python3.10"""
+        """Custom StrEnum object for python3.10."""
+
 
 OPERATING_SYSTEM = platform.system().lower()
 
@@ -25,9 +25,9 @@ class OperatingSystem(StrEnum):
 
 
 if OPERATING_SYSTEM not in (
-        OperatingSystem.linux,
-        OperatingSystem.darwin,
-        OperatingSystem.windows,
+    OperatingSystem.linux,
+    OperatingSystem.darwin,
+    OperatingSystem.windows,
 ):
     raise RuntimeError(
         f"{OPERATING_SYSTEM!r} is unsupported.\n\t"
@@ -40,5 +40,5 @@ def default_disk_lib():
     return dict(
         linux="/usr/bin/lsblk",
         darwin="/usr/sbin/diskutil",
-        windows="C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+        windows="C:\\Program Files\\PowerShell\\7\\pwsh.exe",
     )
