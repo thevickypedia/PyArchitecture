@@ -1,0 +1,47 @@
+[project]
+name = "PyDisk"
+dynamic = ["version", "dependencies"]
+description = "Python module to get physical drives connected to a host machine"
+readme = "README.md"
+authors = [{ name = "Vignesh Rao", email = "svignesh1793@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Hardware",
+]
+keywords = ["physical-drives", "PyDisk"]
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = [
+    "pydisk"
+]
+#[tool.setuptools.package-data]
+#"pydisk.templates" = ["*.html"]
+
+[tool.setuptools.dynamic]
+version = {attr = "pydisk.version"}
+dependencies = { file = ["requirements.txt"] }
+
+[project.optional-dependencies]
+dev = ["pre-commit"]
+standard = [
+    "Jinja2==3.1.*",
+    "requests==2.*",
+    "gmail-connector"
+]
+
+[project.scripts]
+# sends all the args to commandline function, where the arbitary commands as processed accordingly
+pydisk = "pydisk:commandline"
+
+[build-system]
+requires      = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/thevickypedia/PyDisk"
+Source = "https://github.com/thevickypedia/PyDisk"
