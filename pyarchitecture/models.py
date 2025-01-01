@@ -5,9 +5,9 @@ try:
 except ImportError:
     from enum import Enum
 
+
     class StrEnum(str, Enum):
         """Custom StrEnum object for python3.10."""
-
 
 OPERATING_SYSTEM = platform.system().lower()
 
@@ -25,13 +25,22 @@ class OperatingSystem(StrEnum):
 
 
 if OPERATING_SYSTEM not in (
-    OperatingSystem.linux,
-    OperatingSystem.darwin,
-    OperatingSystem.windows,
+        OperatingSystem.linux,
+        OperatingSystem.darwin,
+        OperatingSystem.windows,
 ):
     raise RuntimeError(
         f"{OPERATING_SYSTEM!r} is unsupported.\n\t"
         "Host machine should either be macOS, Windows or any Linux distros"
+    )
+
+
+def default_mem_lib():
+    """Returns the default memory library dedicated to linux and macOS."""
+    return dict(
+        linux="/proc/meminfo",
+        darwin="/usr/sbin/sysctl",
+        windows=""  # placeholder
     )
 
 

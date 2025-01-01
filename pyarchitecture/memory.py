@@ -1,25 +1,101 @@
-import psutil
+import logging
+import os
+import subprocess
 
-from pyarchitecture import squire
+from pyarchitecture import models
+
+LOGGER = logging.getLogger(__name__)
 
 
-def get_memory_info(raw: bool = False) -> dict[str, int | str]:
-    """Get memory information for the host system.
+def get_memory_info_linux(mem_lib: str | os.PathLike):
+    memory_info = {}
+    with open(mem_lib) as f:
+        for line in f:
+            if line.startswith(('MemTotal', 'MemFree', 'MemAvailable', 'Buffers', 'Cached')):
+                parts = line.split()
+                memory_info[parts[0][:-1]] = int(parts[1])  # Convert the memory value to int (in kB)
 
-    Returns:
-        Dict[str, str]:
-        Returns memory information.
-    """
-    if raw:
+    # Convert values to bytes (kB to bytes)
+    total = memory_info.get('MemTotal', 0) * 1024
+    free = memory_info.get('MemFree', 0) * 1024
+    available = memory_info.get('MemAvailable', 0) * 1024
+    used = total - free - available
+
+    return {'total': total, 'free': free, 'used': used}
+
+
+def get_memory_info_macos(mem_lib: str | os.PathLike):
+    def get_sysctl_value(key):
+        result = subprocess.run([mem_lib, key], capture_output=True, text=True)
+        if result.stdout.strip():
+            return int(result.stdout.split(":")[1].strip())
+        return 0
+
+    total = get_sysctl_value('hw.memsize')
+    free = get_sysctl_value('vm.page_free_count') * get_sysctl_value('hw.pagesize')
+    used = total - free
+
+    return {'total': total, 'free': free, 'used': used}
+
+
+def get_memory_info_windows():
+    import ctypes
+    try:
+        memory_info = ctypes.windll.kernel32.GlobalMemoryStatusEx
+        memstatus = ctypes.create_string_buffer(64)
+        memory_info(ctypes.byref(memstatus))
+        total = ctypes.cast(memstatus[0], ctypes.c_ulonglong).value
+        free = ctypes.cast(memstatus[1], ctypes.c_ulonglong).value
+        "TypeError: cast() argument 2 must be a pointer type, not c_ulonglong"
+        used = total - free
+        return {'total': total, 'free': free, 'used': used}
+    except Exception:
+        class MEMORYSTATUSEX(ctypes.Structure):
+            _fields_ = [
+                ("dwLength", ctypes.c_uint),
+                ("dwMemoryLoad", ctypes.c_uint),
+                ("ullTotalPhys", ctypes.c_ulonglong),
+                ("ullAvailPhys", ctypes.c_ulonglong),
+                ("ullTotalPageFile", ctypes.c_ulonglong),
+                ("ullAvailPageFile", ctypes.c_ulonglong),
+                ("ullTotalVirtual", ctypes.c_ulonglong),
+                ("ullAvailVirtual", ctypes.c_ulonglong),
+                ("sullAvailExtendedVirtual", ctypes.c_ulonglong)
+            ]
+
+        # Initialize the MEMORYSTATUSEX structure
+        memory_status = MEMORYSTATUSEX()
+        memory_status.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
+
+        # Call GlobalMemoryStatusEx to fill in the memory_status structure
+        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(memory_status)) == 0:
+            raise Exception("Failed to retrieve memory status")
+
+        # Extract the values from the structure
+        total = memory_status.ullTotalPhys  # Total physical memory (in bytes)
+        available = memory_status.ullAvailPhys  # Available physical memory (in bytes)
+        used = total - available  # Used memory (in bytes)
+
+        # Optionally, you can also include virtual memory information
+        virtual_total = memory_status.ullTotalVirtual
+        virtual_available = memory_status.ullAvailVirtual
+
         return {
-            "total": psutil.virtual_memory().total,
-            "available": psutil.virtual_memory().available,
-            "used": psutil.virtual_memory().used,
-            "free": psutil.virtual_memory().free,
+            'total': total,
+            'available': available,
+            'used': used,
+            'virtual_total': virtual_total,
+            'virtual_available': virtual_available,
         }
-    return {
-        "total": squire.size_converter(psutil.virtual_memory().total),
-        "available": squire.size_converter(psutil.virtual_memory().available),
-        "used": squire.size_converter(psutil.virtual_memory().used),
-        "free": squire.size_converter(psutil.virtual_memory().free),
+
+
+def get_memory_info(mem_lib: str | os.PathLike):
+    os_map = {
+        models.OperatingSystem.darwin: get_memory_info_macos,
+        models.OperatingSystem.linux: get_memory_info_linux,
+        models.OperatingSystem.windows: get_memory_info_windows
     }
+    try:
+        return os_map[models.OPERATING_SYSTEM](mem_lib)
+    except Exception as error:
+        LOGGER.error(error)
