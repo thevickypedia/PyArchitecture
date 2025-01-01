@@ -2,22 +2,23 @@ import logging
 import os
 from typing import Dict, List
 
-from . import linux, macOS, models, windows
+from pyarchitecture import models
+from pyarchitecture.disks import linux, macOS, windows
 
 LOGGER = logging.getLogger(__name__)
 
 
-def get_disk_lib(user_input: str | os.PathLike) -> str:
+def _get_disk_lib(user_input: str | os.PathLike) -> str:
     """Get the disk library for the appropriate OS.
 
     Args:
         user_input: Disk library input by user.
     """
     disk_lib = (
-            user_input
-            or os.environ.get("disk_lib")
-            or os.environ.get("DISK_LIB")
-            or models.default_disk_lib()[models.OPERATING_SYSTEM]
+        user_input
+        or os.environ.get("disk_lib")
+        or os.environ.get("DISK_LIB")
+        or models.default_disk_lib()[models.OPERATING_SYSTEM]
     )
     assert os.path.isfile(disk_lib), f"Disk library {disk_lib!r} doesn't exist"
     return disk_lib
@@ -39,8 +40,7 @@ def get_all_disks(disk_lib: str | os.PathLike = None) -> List[Dict[str, str]]:
         models.OperatingSystem.windows: windows.drive_info,
     }
     try:
-        disk_lib = get_disk_lib(disk_lib)
+        disk_lib = _get_disk_lib(disk_lib)
         return os_map[models.OperatingSystem(models.OPERATING_SYSTEM)](disk_lib)
     except Exception as error:
         LOGGER.error(error)
-        return []

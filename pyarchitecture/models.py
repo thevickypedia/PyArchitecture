@@ -42,3 +42,21 @@ def default_disk_lib():
         darwin="/usr/sbin/diskutil",
         windows="C:\\Program Files\\PowerShell\\7\\pwsh.exe",
     )
+
+
+def default_cpu_lib():
+    """Returns the default processor library dedicated to each supported operating system."""
+    return dict(
+        linux="/proc/cpuinfo",
+        darwin="/usr/sbin/sysctl",
+        windows="C:\\Windows\\System32\\wbem\\wmic.exe",
+    )
+
+
+def default_gpu_lib():
+    """Returns the default GPU library dedicated to each supported operating system."""
+    return dict(
+        linux="/usr/bin/lspci",
+        darwin="/usr/sbin/system_profiler",
+        windows="C:\\Windows\\System32\\wbem\\wmic.exe",
+    )
