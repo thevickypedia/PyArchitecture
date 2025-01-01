@@ -4,7 +4,7 @@ import sys
 import time
 from typing import Any, Dict
 
-from pyarchitecture import cpu, disks, gpu
+from pyarchitecture import cpu, disks, gpu, memory
 
 version = "0.0.0-a0"
 
@@ -20,6 +20,7 @@ def all_components() -> Dict[str, Any]:
         "Disks": disks.get_all_disks(),
         "CPU": cpu.get_cpu_info(),
         "GPU": gpu.get_gpu_names(),
+        "Memory": memory.get_memory_info(),
     }
 
 
@@ -107,10 +108,9 @@ def commandline() -> None:
                 data["GPU"] = gpu.get_gpu_names()
             if disk_info:
                 data["Disks"] = disks.get_all_disks()
-        import io
 
         with open(filename, "w") as json_file:
-            json.dump(data, json_file, indent=2)  # type: io.TextIOBase
+            json.dump(data, json_file, indent=2)
         print(f"Architecture information has been stored in {filename!r}")
         sys.exit(0)
     else:

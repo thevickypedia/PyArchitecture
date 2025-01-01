@@ -2,6 +2,8 @@ import logging
 import os
 from typing import Dict
 
+import psutil
+
 from pyarchitecture import models
 from pyarchitecture.cpu import main
 
@@ -35,9 +37,8 @@ def get_cpu_info(cpu_lib: str | os.PathLike = None) -> Dict[str, int | str]:
         Returns CPU name.
     """
     cpu_name = main.get_name(_get_cpu_lib(cpu_lib))
-    cpu_count = os.cpu_count()
     return {
         "name": cpu_name,
-        "logical_cores": cpu_count,
-        "physical_cores": int(cpu_count / 2) if cpu_count >= 2 else 1,
+        "logical_cores": psutil.cpu_count(logical=True),
+        "physical_cores": psutil.cpu_count(logical=False),
     }

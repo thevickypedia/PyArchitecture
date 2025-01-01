@@ -6,7 +6,7 @@ import re
 import subprocess
 from typing import Dict, List, Tuple
 
-from pyarchitecture.disks import squire
+from pyarchitecture import squire
 
 LOGGER = logging.getLogger(__name__)
 
