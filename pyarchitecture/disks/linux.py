@@ -39,6 +39,6 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
                     disk_info["mountpoints"] = [device["mountpoint"]]
             elif not disk_info["mountpoints"]:
                 disk_info["mountpoints"] = ["Not Mounted"]
-            disk_info["mountpoints"] = ", ".join(disk_info["Mountpoints"])
+            disk_info["mountpoints"] = ", ".join(disk_info["mountpoints"])
             disks.append(disk_info)
     return disks

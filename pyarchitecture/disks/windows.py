@@ -21,7 +21,7 @@ def reformat_windows(data: Dict[str, str | int | float]) -> Dict[str, str]:
         Dict[str, str]:
         Returns a dictionary of key-value pairs.
     """
-    data["ID"] = data["DeviceID"][-1]
+    data["id"] = data["DeviceID"][-1]
     data["name"] = data["Model"]
     data["device_id"] = data["DeviceID"].replace("\\", "").replace(".", "")
     data["size"] = squire.size_converter(data["Size"])
@@ -154,10 +154,10 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
     data = get_drives(disk_lib)
     usage = get_disk_usage(disk_lib)
     for item in data:
-        device_id = item["ID"]
-        item.pop("ID")
+        device_id = item["id"]
+        item.pop("id")
         if device_id in usage:
-            item["Mountpoints"] = ", ".join(usage[device_id])
+            item["mountpoints"] = ", ".join(usage[device_id])
         else:
-            item["Mountpoints"] = "Not Mounted"
+            item["mountpoints"] = "Not Mounted"
     return data
