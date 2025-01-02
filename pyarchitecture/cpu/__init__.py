@@ -22,23 +22,17 @@ def _get_cpu_lib(user_input: str | os.PathLike) -> str:
     )
 
 
-def get_cpu_info(cpu_lib: str | os.PathLike = None) -> Dict[str, int | str]:
+def get_cpu_info(cpu_lib: str | os.PathLike = None) -> str:
     """OS-agnostic function to get all CPUs connected to the host system.
 
     Args:
         cpu_lib: Custom CPU library path.
 
     Returns:
-        List[Dict[str, str]]:
+        str:
         Returns CPU name.
     """
     library_path = _get_cpu_lib(cpu_lib)
     if os.path.isfile(library_path):
-        cpu_name = main.get_name(library_path)
-        cpu_count = os.cpu_count()
-        return {
-            "name": cpu_name,
-            "logical_cores": cpu_count,
-            "physical_cores": int(cpu_count / 2) if cpu_count >= 2 else 1,
-        }
+        return main.get_name(library_path)
     LOGGER.error(f"CPU library {library_path!r} doesn't exist")

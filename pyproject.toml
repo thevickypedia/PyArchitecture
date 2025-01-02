@@ -1,7 +1,7 @@
 [project]
 name = "PyArchitecture"
 dynamic = ["version"]
-description = "Python module to get physical drives connected to a host machine"
+description = "Python module to get kernel information via OS specific CLI commands"
 readme = "README.md"
 authors = [{ name = "Vignesh Rao", email = "svignesh1793@gmail.com" }]
 license = { file = "LICENSE" }

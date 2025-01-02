@@ -1,5 +1,5 @@
 # PyArchitecture
-PyArchitecture is a lightweight python module to get system architecture information.
+PyArchitecture is a lightweight python module to get kernel information via OS specific CLI commands.
 
 ![Python][label-pyversion]
 
@@ -10,6 +10,20 @@ PyArchitecture is a lightweight python module to get system architecture informa
 [![Pypi][label-pypi]][pypi]
 [![Pypi-format][label-pypi-format]][pypi-files]
 [![Pypi-status][label-pypi-status]][pypi]
+
+## Summary
+
+PyArchitecture is designed to retrieve hard-to-find kernel information like CPU/GPU model name, physical disks,
+and memory profiles without using any external dependencies.
+
+> Although this project does not rely on external dependencies, it does use system tools, as outlined below.
+
+| Datatype / Override key | Linux            | Darwin (macOS)              | Windows                                  |
+|-------------------------|------------------|-----------------------------|------------------------------------------|
+| **CPU** - `cpu_lib`     | `/proc/cpuinfo`  | `/usr/sbin/sysctl`          | `C:\Windows\System32\wbem\wmic.exe`      |
+| **PCI** - `gpu_lib`     | `/usr/bin/lspci` | `/usr/sbin/system_profiler` | `C:\Windows\System32\wbem\wmic.exe`      |
+| **Memory** - `mem_lib`  | `/proc/meminfo`  | `/usr/sbin/sysctl`          | N/A                                      |
+| **Disk** - `disk_lib`   | `/usr/bin/lsblk` | `/usr/sbin/diskutil`        | `C:\Program Files\PowerShell\7\pwsh.exe` |
 
 ## Installation
 
