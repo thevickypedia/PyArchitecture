@@ -18,12 +18,12 @@ and memory profiles without using any external dependencies.
 
 > Although this project does not rely on external dependencies, it does use system tools, as outlined below.
 
-| Datatype / Override key | Linux            | Darwin (macOS)              | Windows                                  |
-|-------------------------|------------------|-----------------------------|------------------------------------------|
-| **CPU** - `cpu_lib`     | `/proc/cpuinfo`  | `/usr/sbin/sysctl`          | `C:\Windows\System32\wbem\wmic.exe`      |
-| **PCI** - `gpu_lib`     | `/usr/bin/lspci` | `/usr/sbin/system_profiler` | `C:\Windows\System32\wbem\wmic.exe`      |
-| **Memory** - `mem_lib`  | `/proc/meminfo`  | `/usr/sbin/sysctl`          | N/A                                      |
-| **Disk** - `disk_lib`   | `/usr/bin/lsblk` | `/usr/sbin/diskutil`        | `C:\Program Files\PowerShell\7\pwsh.exe` |
+| Library / Override       | Linux            | Darwin (macOS)              | Windows                                  |
+|--------------------------|------------------|-----------------------------|------------------------------------------|
+| **CPU**<br/>`cpu_lib`    | `/proc/cpuinfo`  | `/usr/sbin/sysctl`          | `C:\Windows\System32\wbem\wmic.exe`      |
+| **PCI**<br/>`gpu_lib`    | `/usr/bin/lspci` | `/usr/sbin/system_profiler` | `C:\Windows\System32\wbem\wmic.exe`      |
+| **Memory**<br/>`mem_lib` | `/proc/meminfo`  | `/usr/sbin/sysctl`          | N/A                                      |
+| **Disk**<br/>`disk_lib`  | `/usr/bin/lsblk` | `/usr/sbin/diskutil`        | `C:\Program Files\PowerShell\7\pwsh.exe` |
 
 ## Installation
 
