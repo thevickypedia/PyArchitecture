@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Dict
 
 from pyarchitecture import config
 from pyarchitecture.cpu import main

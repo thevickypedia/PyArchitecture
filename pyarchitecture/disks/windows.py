@@ -33,11 +33,11 @@ def reformat_windows(data: Dict[str, str | int | float]) -> Dict[str, str]:
     return data
 
 
-def get_drives(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
+def get_drives(disk_lib: str | os.PathLike) -> List[Dict[str, str | List[str]]]:
     """Get physical drives connected to a Windows machine.
 
     Returns:
-        List[Dict[str, str]]:
+        List[Dict[str, str | List[str]]]:
         Returns the formatted data for all the drives as a list of key-value pairs.
     """
     # noinspection LongLine
@@ -147,11 +147,11 @@ def get_disk_usage(disk_lib: str | os.PathLike) -> Dict[str, List[str]]:
     return output_data
 
 
-def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
+def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str | List[str]]]:
     """Get disks attached to Windows devices.
 
     Returns:
-        List[Dict[str, str]]:
+        List[Dict[str, str | List[str]]]
         Returns disks information for Windows machines.
     """
     data = get_drives(disk_lib)
@@ -159,8 +159,5 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
     for item in data:
         device_id = item["id"]
         item.pop("id")
-        if device_id in usage:
-            item["mountpoints"] = ", ".join(usage[device_id])
-        else:
-            item["mountpoints"] = "Not Mounted"
+        item["mountpoints"] = usage.get(device_id, [])
     return data

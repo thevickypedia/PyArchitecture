@@ -51,7 +51,7 @@ def update_mountpoints(
                         device_ids[device_id].append(mount_point)
     for device_id, mountpoints in device_ids.items():
         if not mountpoints:
-            device_ids[device_id] = ["Not Mounted"]
+            device_ids[device_id] = []
     return device_ids
 
 
@@ -80,11 +80,11 @@ def parse_diskutil_output(stdout: str) -> List[Dict[str, str]]:
     return disks
 
 
-def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
+def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str | List[str]]]:
     """Get disks attached to macOS devices.
 
     Returns:
-        List[Dict[str, str]]:
+        List[Dict[str, str | List[str]]]:
         Returns disks information for macOS devices.
     """
     result = subprocess.run([disk_lib, "info", "-all"], capture_output=True, text=True)
@@ -107,5 +107,5 @@ def drive_info(disk_lib: str | os.PathLike) -> List[Dict[str, str]]:
             _ = device_ids[disk["Device Identifier"]]
     mountpoints = update_mountpoints(disks, device_ids)
     for disk in physical_disks:
-        disk["mountpoints"] = ", ".join(mountpoints[disk["device_id"]])
+        disk["mountpoints"] = mountpoints[disk["device_id"]]
     return physical_disks
