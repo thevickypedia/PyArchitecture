@@ -27,6 +27,7 @@ def reformat_windows(data: Dict[str, str | int | float]) -> Dict[str, str]:
     data["size"] = squire.size_converter(data["Size"])
     del data["Caption"]
     del data["Model"]
+    del data["DeviceID"]
     return data
 
 
