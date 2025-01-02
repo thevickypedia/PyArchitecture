@@ -25,9 +25,11 @@ def reformat_windows(data: Dict[str, str | int | float]) -> Dict[str, str]:
     data["name"] = data["Model"]
     data["device_id"] = data["DeviceID"].replace("\\", "").replace(".", "")
     data["size"] = squire.size_converter(data["Size"])
-    del data["Caption"]
-    del data["Model"]
-    del data["DeviceID"]
+    data.pop("Caption", None)
+    data.pop("Model", None)
+    data.pop("DeviceID", None)
+    data.pop("Partitions", None)
+    data.pop("Size", None)
     return data
 
 
