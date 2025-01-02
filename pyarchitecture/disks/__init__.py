@@ -2,7 +2,7 @@ import logging
 import os
 from typing import Dict, List
 
-from pyarchitecture import models
+from pyarchitecture import config
 from pyarchitecture.disks import linux, macOS, windows
 
 LOGGER = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ def _get_disk_lib(user_input: str | os.PathLike) -> str:
         user_input
         or os.environ.get("disk_lib")
         or os.environ.get("DISK_LIB")
-        or models.default_disk_lib()[models.OPERATING_SYSTEM]
+        or config.default_disk_lib()[config.OPERATING_SYSTEM]
     )
 
 
@@ -35,9 +35,9 @@ def get_all_disks(disk_lib: str | os.PathLike = None) -> List[Dict[str, str]]:
     library_path = _get_disk_lib(disk_lib)
     if os.path.isfile(library_path):
         os_map = {
-            models.OperatingSystem.darwin: macOS.drive_info,
-            models.OperatingSystem.linux: linux.drive_info,
-            models.OperatingSystem.windows: windows.drive_info,
+            config.OperatingSystem.darwin: macOS.drive_info,
+            config.OperatingSystem.linux: linux.drive_info,
+            config.OperatingSystem.windows: windows.drive_info,
         }
-        return os_map[models.OperatingSystem(models.OPERATING_SYSTEM)](library_path)
+        return os_map[config.OperatingSystem(config.OPERATING_SYSTEM)](library_path)
     LOGGER.error(f"Disk library {library_path!r} doesn't exist")

@@ -2,7 +2,7 @@ import logging
 import os
 from typing import Dict
 
-from pyarchitecture import models, squire
+from pyarchitecture import config, squire
 from pyarchitecture.memory import linux, macOS, windows
 
 LOGGER = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ def _get_mem_lib(user_input: str | os.PathLike) -> str:
         user_input
         or os.environ.get("mem_lib")
         or os.environ.get("MEM_LIB")
-        or models.default_mem_lib()[models.OPERATING_SYSTEM]
+        or config.default_mem_lib()[config.OPERATING_SYSTEM]
         or __file__  # placeholder for windows
     )
 
@@ -37,13 +37,13 @@ def get_memory_info(
         Returns the memory information as key-value pairs.
     """
     os_map = {
-        models.OperatingSystem.darwin: macOS.get_memory_info,
-        models.OperatingSystem.linux: linux.get_memory_info,
-        models.OperatingSystem.windows: windows.get_memory_info,
+        config.OperatingSystem.darwin: macOS.get_memory_info,
+        config.OperatingSystem.linux: linux.get_memory_info,
+        config.OperatingSystem.windows: windows.get_memory_info,
     }
     library_path = _get_mem_lib(mem_lib)
     if os.path.isfile(library_path):
-        raw_info = os_map[models.OPERATING_SYSTEM](library_path)
+        raw_info = os_map[config.OPERATING_SYSTEM](library_path)
         if humanize:
             return {k: squire.size_converter(v) for k, v in raw_info.items()}
         return raw_info

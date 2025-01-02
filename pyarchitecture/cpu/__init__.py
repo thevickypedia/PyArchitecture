@@ -2,7 +2,7 @@ import logging
 import os
 from typing import Dict
 
-from pyarchitecture import models
+from pyarchitecture import config
 from pyarchitecture.cpu import main
 
 LOGGER = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ def _get_cpu_lib(user_input: str | os.PathLike) -> str:
         user_input
         or os.environ.get("cpu_lib")
         or os.environ.get("CPU_LIB")
-        or models.default_cpu_lib()[models.OPERATING_SYSTEM]
+        or config.default_cpu_lib()[config.OPERATING_SYSTEM]
     )
 
 

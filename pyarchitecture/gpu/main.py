@@ -4,7 +4,7 @@ import os
 import subprocess
 from typing import Dict, List, Optional
 
-from pyarchitecture import models
+from pyarchitecture import config
 
 LOGGER = logging.getLogger(__name__)
 
@@ -119,6 +119,6 @@ def get_names(gpu_lib: str | os.PathLike) -> List[Dict[str, str]]:
     """Get list of GPU model and vendor information based on the operating system."""
     fn_map = dict(linux=_linux, darwin=_darwin, windows=_windows)
     try:
-        return fn_map[models.OPERATING_SYSTEM](gpu_lib)
+        return fn_map[config.OPERATING_SYSTEM](gpu_lib)
     except (subprocess.SubprocessError, FileNotFoundError) as error:
         LOGGER.debug(error)

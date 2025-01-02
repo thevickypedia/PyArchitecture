@@ -2,7 +2,7 @@ import logging
 import os
 import subprocess
 
-from pyarchitecture.cpu import models
+from pyarchitecture.cpu import config
 
 LOGGER = logging.getLogger(__name__)
 
@@ -36,11 +36,11 @@ def get_name(cpu_lib: str | os.PathLike) -> str | None:
         Returns the processor information as a string.
     """
     os_map = {
-        models.OperatingSystem.darwin: _darwin,
-        models.OperatingSystem.linux: _linux,
-        models.OperatingSystem.windows: _windows,
+        config.OperatingSystem.darwin: _darwin,
+        config.OperatingSystem.linux: _linux,
+        config.OperatingSystem.windows: _windows,
     }
     try:
-        return os_map[models.OPERATING_SYSTEM](cpu_lib)
+        return os_map[config.OPERATING_SYSTEM](cpu_lib)
     except Exception as error:
         LOGGER.error(error)

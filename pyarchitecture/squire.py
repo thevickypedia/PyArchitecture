@@ -60,10 +60,10 @@ def convert_to_bytes(size_str: str) -> int:
     # Find the last character, which should indicate the unit (B, K, M, G, T, P, E)
     if size_str[-1] in units:
         # Extract the numeric value and unit
-        numeric_part = size_str[
-            :-1
-        ].strip()  # everything except the last character (unit)
-        unit_part = size_str[-1]  # the last character (unit)
+        # everything except the last character (unit)
+        numeric_part = size_str[:-1].strip()
+        # the last character (unit)
+        unit_part = size_str[-1]
 
         # Ensure the numeric part is a valid number
         try:

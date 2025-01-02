@@ -2,7 +2,7 @@ import logging
 import os
 from typing import Dict, List
 
-from pyarchitecture import models
+from pyarchitecture import config
 from pyarchitecture.gpu import main
 
 LOGGER = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ def _get_gpu_lib(user_input: str | os.PathLike) -> str:
         user_input
         or os.environ.get("gpu_lib")
         or os.environ.get("GPU_LIB")
-        or models.default_gpu_lib()[models.OPERATING_SYSTEM]
+        or config.default_gpu_lib()[config.OPERATING_SYSTEM]
     )
 
 
