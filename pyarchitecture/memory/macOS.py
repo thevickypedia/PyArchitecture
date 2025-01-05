@@ -57,10 +57,13 @@ def get_memory_info(mem_lib: str | os.PathLike) -> Dict[str, int | str]:
     """
     # Physical memory information
     total = get_sysctl_value(mem_lib, "hw.memsize")
-    free = get_sysctl_value(mem_lib, "vm.page_free_count") * get_sysctl_value(
-        mem_lib, "hw.pagesize"
-    )
-    used = total - free
+    page_size = get_sysctl_value(mem_lib, "hw.pagesize")
+    free_pages = get_sysctl_value(mem_lib, "vm.page_free_count")
+    inactive_pages = get_sysctl_value(mem_lib, "vm.page_inactive_count")
+
+    available = (free_pages + inactive_pages) * page_size
+    free = free_pages * page_size
+    used = total - available
 
     # Virtual memory information
     swap_info = get_sysctl_value(mem_lib, "vm.swapusage")
@@ -69,6 +72,7 @@ def get_memory_info(mem_lib: str | os.PathLike) -> Dict[str, int | str]:
         **{
             "total": total,
             "free": free,
+            "available": available,
             "used": used,
         },
         **swap_info,

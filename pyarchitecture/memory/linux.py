@@ -42,6 +42,7 @@ def get_memory_info(mem_lib: str | os.PathLike) -> Dict[str, int | str]:
     return {
         "total": total,
         "free": free,
+        "available": available,
         "used": used,
         "swap_total": swap_total,
         "swap_used": swap_used,

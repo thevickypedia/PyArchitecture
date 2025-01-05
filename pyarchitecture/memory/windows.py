@@ -6,7 +6,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class MEMORYSTATUSEX(ctypes.Structure):
-    """Structure for the GlobalMemoryStatusEx function overriden by ctypes.Structure.
+    """Structure for the GlobalMemoryStatusEx function overridden by ctypes.Structure.
 
     >>> MEMORYSTATUSEX
 
@@ -44,12 +44,12 @@ def get_memory_info(_: str) -> Dict[str, int]:
         LOGGER.error("Failed to retrieve memory status")
         return {}
 
-    # Extract the values from the structure
-    total = memory_status.ullTotalPhys  # Total physical memory (in bytes)
-    available = memory_status.ullAvailPhys  # Available physical memory (in bytes)
-    used = total - available  # Used memory (in bytes)
+    # Physical memory
+    total = memory_status.ullTotalPhys
+    available = memory_status.ullAvailPhys
+    used = total - available
 
-    # Optionally, you can also include virtual memory information
+    # Virtual memory
     virtual_total = memory_status.ullTotalVirtual
     virtual_available = memory_status.ullAvailVirtual
 
