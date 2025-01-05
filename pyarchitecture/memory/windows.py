@@ -10,6 +10,8 @@ class MEMORYSTATUSEX(ctypes.Structure):
 
     >>> MEMORYSTATUSEX
 
+    References:
+        https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex
     """
 
     _fields_ = [
@@ -50,6 +52,10 @@ def get_memory_info(_: str) -> Dict[str, int]:
     used = total - available
 
     # Virtual memory
+    # It is tied to the addressable memory space of your operating system and CPU architecture
+    # It is not tied to the physical memory installed on your system
+    # For example, a 64-bit processor can theoretically address 2^64 bytes of memory (16 exabytes)
+    # Practical limits are imposed by the OS. So, Windows typically uses a 48-bit address space, corresponding to 128 TB
     virtual_total = memory_status.ullTotalVirtual
     virtual_available = memory_status.ullAvailVirtual
 
