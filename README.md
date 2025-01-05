@@ -6,6 +6,7 @@ PyArchitecture is a lightweight python module to get kernel information via OS s
 ![Platform][label-platform]
 
 [![pypi][label-actions-pypi]][gha_pypi]
+[![functional-tests][label-func-test-pypi]][gha_func_test]
 
 [![Pypi][label-pypi]][pypi]
 [![Pypi-format][label-pypi-format]][pypi-files]
@@ -90,15 +91,17 @@ pre-commit run --all-files
 
 Licensed under the [MIT License][license]
 
-[license]: https://github.com/thevickypedia/PyArchitecture/blob/master/LICENSE
+[license]: https://github.com/thevickypedia/PyArchitecture/blob/main/LICENSE
 [label-pypi-package]: https://img.shields.io/badge/Pypi%20Package-PyArchitecture-blue?style=for-the-badge&logo=Python
 [label-pyversion]: https://img.shields.io/badge/python-3.10%20%7C%203.11-blue
 [label-platform]: https://img.shields.io/badge/Platform-Linux|macOS|Windows-1f425f.svg
 [label-actions-pypi]: https://github.com/thevickypedia/PyArchitecture/actions/workflows/python-publish.yaml/badge.svg
+[label-func-test-pypi]: https://github.com/thevickypedia/PyArchitecture/actions/workflows/functional-tests.yaml/badge.svg
 [label-pypi]: https://img.shields.io/pypi/v/PyArchitecture
 [label-pypi-format]: https://img.shields.io/pypi/format/PyArchitecture
 [label-pypi-status]: https://img.shields.io/pypi/status/PyArchitecture
 [gha_pypi]: https://github.com/thevickypedia/PyArchitecture/actions/workflows/python-publish.yaml
+[gha_func_test]: https://github.com/thevickypedia/PyArchitecture/actions/workflows/functional-tests.yaml
 [pypi]: https://pypi.org/project/PyArchitecture
 [pypi-files]: https://pypi.org/project/PyArchitecture/#files
 [pypi-repo]: https://packaging.python.org/tutorials/packaging-projects/

@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.3.1 (01/05/2025)
+-------------------
+- Include distinction for available vs free memory for Linux and macOS
+
 v0.3.0 (01/05/2025)
 -------------------
 - Uses `shutil` to gather default library paths

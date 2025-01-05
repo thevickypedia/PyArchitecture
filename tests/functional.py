@@ -1,5 +1,5 @@
 import platform
-from typing import Set, NoReturn
+from typing import NoReturn, Set
 
 import pyarchitecture
 
@@ -19,6 +19,7 @@ def assert_cpu() -> None | NoReturn:
 
 
 def assert_memory(valid_keys: Set[str]) -> None | NoReturn:
+    """Assert memory output."""
     mem_info = pyarchitecture.memory.get_memory_info()
     assert set(mem_info.keys()) == valid_keys, f"{set(mem_info.keys())} != {valid_keys}"
     assert all(mem_info.values())
@@ -43,5 +44,5 @@ def main() -> None | NoReturn:
     assert_memory(memory_keys)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
