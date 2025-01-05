@@ -55,6 +55,17 @@ pyarchitecture all
 
 > Use `pyarchitecture --help` for usage instructions.
 
+## [Release Notes][release-notes]
+**Requirement**
+```shell
+python -m pip install gitverse
+```
+
+**Usage**
+```shell
+gitverse-release reverse -f release_notes.rst -t 'Release Notes'
+```
+
 ## Linting
 `pre-commit` will ensure linting
 
@@ -91,3 +102,4 @@ Licensed under the [MIT License][license]
 [pypi]: https://pypi.org/project/PyArchitecture
 [pypi-files]: https://pypi.org/project/PyArchitecture/#files
 [pypi-repo]: https://packaging.python.org/tutorials/packaging-projects/
+[release-notes]: https://github.com/thevickypedia/PyArchitecture/blob/main/release_notes.rst

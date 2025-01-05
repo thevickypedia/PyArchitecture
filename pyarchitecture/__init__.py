@@ -5,7 +5,7 @@ from typing import Any, Dict, NoReturn
 
 from pyarchitecture import cpu, disks, gpu, memory
 
-version = "0.2.1"
+version = "0.3.0"
 
 
 def all_components() -> Dict[str, Any]:
